@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sustainify</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="index.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <nav class="navbar">
+        <img class="logo"
+            src="https://static.vecteezy.com/system/resources/previews/004/820/773/original/upside-down-arrow-with-electrical-plug-and-lightning-free-vector.jpg"
+            alt="">
+        <h2 class="title"><span style="color: #007af3;">Sustainify:</span> Sustainable Living Made Easy</h2>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="analysis.html">Analysis</a></li>
+            <li><a href="team.html">Out Team</a></li>
+            <!-- <li><a href="#">Sign Up</a></li> -->
+        </ul>
+    </nav>
+
+
+    <div class="sl">
+        <div id="slider-container" class="slider">
+            <div class="slide">
+                <img src="https://blog.constellation.com/wp-content/uploads/2021/02/how-much-energy-does-a-house-use.png"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://www.eletimes.com/wp-content/uploads/2019/09/energy_main.jpg"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://keralakaumudi.com/web-news/en/2023/01/NMAN0383554/image/power.1672600932.jpg"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://media.istockphoto.com/id/1328805329/photo/lit-light-bulb-with-coins-beside-it-energy-tariffs.jpg?s=612x612&w=0&k=20&c=sm80z2UsPrhhFkkJgIiLXxAAstDum_XhGH9DW5A4HVk="
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1479981280584-037818c1297d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=20"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=20"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1560259324-12a044e67c34?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=20"
+                    alt="">
+            </div>
+            </div>
+            <div onclick="prev()" class="control-prev-btn">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div onclick="next()" class="control-next-btn">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="text">
+        <p><span class="auto-ip"></span></p>
+        <p></p>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        var typed = new Typed(".auto-ip",{
+            strings: ["Our mission is to make sustainable living easy and convenient, without sacrificing comfort or quality of life. We believe that small changes can make a big difference, and we're committed to empowering people to live in a way that's better for the planet and for future generations.."],
+            typeSpeed: 5,
+            backSpeed: 10,
+            loop: true
+        })
+        
+    </script>
+</body>
+
+</html>

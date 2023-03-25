@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    document.getElementById("email-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      var recipient = document.getElementById("recipient").value;
+      var subject = document.getElementById("subject").value;
+      var message = document.getElementById("message").value;
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/send_email");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          alert("Email sent successfully!");
+        }
+      };
+      xhr.send(JSON.stringify({ recipient: recipient, subject: subject, message: message }));
+    });
+  </script>
+
+<form id="email-form">
+  <label for="recipient">Recipient:</label>
+  <input type="email" name="recipient" id="recipient" required>
+  <br>
+  <label for="subject">Subject:</label>
+  <input type="text" name="subject" id="subject" required>
+  <br>
+  <label for="message">Message:</label>
+  <textarea name="message" id="message" rows="10" cols="50" required></textarea>
+  <br>
+  <button type="submit">Send Email</button>
+</form>
+
+</body>
+
+</html>
+
+
+

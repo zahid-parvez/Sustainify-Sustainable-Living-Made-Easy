@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Data Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .heading {
+      margin-left: 460px;
+      margin-bottom: 20px;
+    }
+
+    body {
+      background: #2b5876;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, deepskyblue, lightblue);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: -webkit-gradient(linear, left top, right top, from(deepskyblue), to(lightblue));
+      background: -webkit-linear-gradient(left, deepskyblue, lightblue);
+      background: -o-linear-gradient(left, deepskyblue, lightblue);
+      background: linear-gradient(to right, deepskyblue, lightblue);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      -webkit-box-shadow: 0 0 20px rgb(54, 54, 123);
+      box-shadow: 0 0 40px darkblue;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="heading">
+    <h1>Analyzing Laptop Power Consumption</h1>
+  </div>
+  <canvas id="myChart"></canvas>
+  <script>
+    function readThingSpeakData(channelId, readApiKey, results, callback) {
+
+      
+      const url = `https://api.thingspeak.com/channels/2071055/feeds.json?results=8000`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.feeds && data.feeds.length > 0) {
+            const entries = data.feeds.map(feed => ({
+              time: new Date(feed.created_at),
+              field1: parseFloat(feed.field1)
+
+              // field2: parseFloat(feed.field2),
+              // field3: parseFloat(feed.field3),
+              // field4: parseFloat(feed.field4)
+            }));
+            var field1Sum = entries.reduce((sum, entry) => sum + entry.field1, 0);
+            field1Sum = field1Sum * 230;
+            console.log(field1Sum);
+            if (field1Sum > 1000) {
+              
+            }
+            callback(null, entries);
+          } else {
+            callback(new Error('No data found'));
+          }
+        })
+        .catch(error => {
+          callback(error);
+        });
+    }
+
+    function mail() {
+      const nodemailer = require('nodemailer');
+      let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'ajayg.bathini@gmail.com',
+          pass: 'senwhoxngqygrllg'
+        }
+      });
+      let mailOptions = {
+        from: 'ajayg.bathini@gmail.com',
+        to: '1602-20-737-310@vce.ac.in',
+        subject: 'Test Email',
+        text: 'This is a test email.'
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      return;
+    }
+
+    const chartConfig = {
+      type: 'line',
+      data: {
+        datasets: [{
+          label: 'Field 1',
+          data: [],
+          borderColor: 'red',
+          fill: false
+        }, {
+          label: 'Field 2',
+          data: [],
+          borderColor: 'blue',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              displayFormats: {
+                hour: 'MMM D, hA'
+              }
+            }
+          }]
+        }
+      }
+    };
+
+    const chartData = {
+      labels: [],
+      datasets: [{
+        label: 'Current',
+        data: [],
+        borderColor: 'blue',
+        fill: false
+      }, {
+        label: 'Power Consumption In Watts',
+        data: [],
+        borderColor: 'red',
+        fill: false
+      }
+      ]
+    };
+
+    readThingSpeakData('2071055', 'KUUXQ1SNUDF2DWYA', 100, (error, entries) => {
+      if (error) {
+        console.error(error);
+      } else {
+        chartData.labels = entries.map(entry => entry.time);
+        chartData.datasets[0].data = entries.map(entry => entry.field1);
+        chartData.datasets[1].data = entries.map(entry => entry.field1 * 230);
+        // chartData.datasets[1].data = entries.map(entry => entry.field2);
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const chart = new Chart(ctx, chartConfig);
+        chart.data = chartData;
+        chart.update();
+      }
+    });
+  </script>
+</body>
+
+</html>
